@@ -95,14 +95,15 @@ router.route("/get").post(isLoggedIn,function(req,res,next){
   }
   News.find(obj,function(err,data){
     if(keyword){
-      var O = data.map(function(d){
-      if((d.description.indexOf(/keyword/,'i')>-1)||(d.title.indexOf(/keyword/,'i')>-1)||(d.author.indexOf(/keyword/,'i')>-1)||(d.comment.indexOf(/keyword/,'i')>-1)){
-        return d;
+      if(data){
+        data = data.map(function(d){
+        if((d.description.search(new RegExp(keyword,'i'))>-1)||(d.title.search(new RegExp(keyword,'i'))>-1)||(d.author.search(new RegExp(keyword,'i'))>-1)||(d.comment.search(new RegExp(keyword,'i'))>-1)){
+          return d;
+        }
+        });
       }
-      data = O;
-      });
     }
-    res.send(data);
+    res.json(data);
   });
 });
 
