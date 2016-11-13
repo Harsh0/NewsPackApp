@@ -23,7 +23,7 @@ var Footer = React.createClass({
                     <span className="fa fa-youtube-play"></span>&emsp;
                 </div>
                 <div className="col-sm-2">
-                  <h6>Coded  With  <span className="glyphicon glyphicon-heart"></span>  by  SHUBHAM</h6>
+                  <h6>Coded  With  <span className="glyphicon glyphicon-heart"></span>  by  Team Ninja</h6>
                 </div>
               </div>
             </div>

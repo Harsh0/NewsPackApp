@@ -3,22 +3,22 @@ var {Link} = require('react-router');
 var DisplayNews = require('./DisplayNews.js');
 
 var HomeComponent = React.createClass({
-
-  source(source){
-    alert("hello");
-    var source = source;
-    alert(source);
-
+  getInitialState: function () {
+    return {
+      stateNews : []
+    };
+  },
+  source(str){
+    var source = str;
     $.ajax({
       url:'https://newsapi.org/v1/articles?source='+source+'&apiKey=d39a8bf66cc946f380211c5759769af5',
       type: 'GET',
       dataType: 'JSON',
       success: function(data)
       {
-     //  alert(data);
-         console.log("Ajax login success");
-         this.setState({stateNews:data.articles});
-         console.log(data.articles);
+        console.log("Ajax login success");
+        this.setState({stateNews:data.articles});
+        //console.log(data.articles);
       }.bind(this),
       error: function(err)
       {
@@ -26,13 +26,6 @@ var HomeComponent = React.createClass({
       }.bind(this)
     });
   },
-
-  getInitialState: function () {
-    return {
-      stateNews : []
-    };
-  },
-
   render: function() {
     return (
       <div className="container-fluid">
@@ -65,7 +58,7 @@ var HomeComponent = React.createClass({
         <br/>
         <br/>
         <br/>
-        <DisplayNews movieObj={this.state.stateNews}/>
+        <DisplayNews newsObj={this.state.stateNews}/>
       </div>
     )
   }
