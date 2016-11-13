@@ -1,0 +1,36 @@
+var React = require('react');
+var ReactDOM = require('react-dom');
+var {browserHistory, Route, Router, IndexRoute,hasHistory} = require('react-router');
+var HomeComponent = require('./Components/Home.js');
+var LoginComponent = require('./Components/LoginComponent.js');
+var LogoutComponent = require('./Components/LogoutComponent.js');
+var Navbar2 = require('./Components/Navbar2.js');
+var Footer = require('./Components/Footer.js');
+
+
+var MainComponent = React.createClass({
+  render:function(){
+    return (
+      <div>
+      <Navbar2 />
+      {this.props.children}
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <Footer />
+      </div>
+    );
+  }
+});
+//when the method is called, this method gets instantiated, and returns the virtual DOM. after getting V DOM, it renders and display this div tagfrom index.
+ReactDOM.render(
+  <Router history = {browserHistory}>
+  <Route path="/" component={MainComponent}>
+  <IndexRoute component={HomeComponent}/>
+  <Route path="/about" component={LogoutComponent}/>
+  <Route path="/home" component={HomeComponent}/>
+  </Route>
+
+  </Router>,document.getElementById('app'));
