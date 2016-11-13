@@ -10,6 +10,7 @@ var newsDetailsSchema = new Schema({
   publishedAt:String,
   category:String,
   comment:String,
-  UserID:{type:Schema.Types.ObjectId,ref:"userdetails"}
-})
+  username:String,
+  addedAt:{type:Date,default:Date.now()}
+});
 module.exports = mongoose.model('newsdetails',newsDetailsSchema);

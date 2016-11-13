@@ -6,7 +6,7 @@ var userDetailsSchema = new Schema({
   email:String,
   username: String,
   password: String,
-  createdAt:{type:Date,default:Date.now()}
+  createdAt:{type:Date,default:Date.now()},
   category:[String]
 });
 module.exports = mongoose.model('userdetails',userDetailsSchema);

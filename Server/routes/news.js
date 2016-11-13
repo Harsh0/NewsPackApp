@@ -12,16 +12,10 @@ function isLoggedIn(req,res,next){
   }
 }
 
-function addNews(obj){
-  var ret;
-
-}
 /*add news to the database */
 router.route("/add").post(isLoggedIn,function(req, res, next) {
   var Obj = req.body;/*body will contain news object from newsapi added on more field category*/
-  User.findOne({username:req.user.username},{},function(err,data){
-    Obj["UserId"]=new ObjectId(ata["_id"]);/*adding userid for news schema*/
-    console.log(data["_id"]);
+    Obj.username=req.user.username;/*adding userid for news schema*/
     if(!Obj.category){
       Obj.category = "Others";
     }
@@ -35,7 +29,7 @@ router.route("/add").post(isLoggedIn,function(req, res, next) {
       else{
         if(data){
           /*category already exist*/
-          News.findOne({url:Obj.url},function(err,data){
+          News.findOne({url:Obj.url,username:req.user.username},function(err,data){
             if(err){
               res.send(err);
             }
@@ -62,7 +56,7 @@ router.route("/add").post(isLoggedIn,function(req, res, next) {
             }
             else{
               /*category added successfully*/
-              News.findOne({url:Obj.url},function(err,data){
+              News.findOne({url:Obj.url,username:req.user.username},function(err,data){
                 if(err){
                   res.send(err);
                 }
@@ -86,17 +80,30 @@ router.route("/add").post(isLoggedIn,function(req, res, next) {
         }
       }
     });
-  });
-});
-/*fetch category name for a perticular user from database*/
-router.route("/categories").get(isLoggedIn,function(req,res,next){
-
 });
 
 /*fetch news from database according to category and keyword*/
 /*object from body will be passed that contain category and keyword both eare optional*/
 router.route("/get").post(isLoggedIn,function(req,res,next){
-
+  var obj = {username:req.user.username};
+  var keyword = "";
+  if(req.body.category){
+  obj.category = req.body.category;
+  }
+  if(req.body.keyword){
+    keyword = req.body.keyword;
+  }
+  News.find(obj,function(err,data){
+    if(keyword){
+      var O = data.map(function(d){
+      if((d.description.indexOf(/keyword/,'i')>-1)||(d.title.indexOf(/keyword/,'i')>-1)||(d.author.indexOf(/keyword/,'i')>-1)||(d.comment.indexOf(/keyword/,'i')>-1)){
+        return d;
+      }
+      data = O;
+      });
+    }
+    res.send(data);
+  });
 });
 
 module.exports = router;

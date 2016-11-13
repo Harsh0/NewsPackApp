@@ -41,7 +41,7 @@ db.once('open',function(){
 
 
 //app.use('/', routes);
-app.use('/users', users);
+app.use('/user', users);
 app.use('/news', news);
 
 app.post('/login',
