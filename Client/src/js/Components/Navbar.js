@@ -8,7 +8,7 @@ var Navbar = React.createClass({
       <nav className="navbar navbar-default">
       <div style={{backgroundColor:"#009595"}} className="container-fluid">
       <div style={{color:'#ffffff'}} className="navbar-header">
-      <a className="navbar-brand" href="#"><img alt="Brand" src="../css/d.png"></img></a>
+      <a className="navbar-brand" href="http://localhost:8080"><img alt="Brand" src="../css/d.png"></img></a>
       </div>
       <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul className="nav navbar-nav navbar-right">

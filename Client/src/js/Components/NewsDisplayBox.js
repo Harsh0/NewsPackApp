@@ -76,7 +76,7 @@ var NewsDisplayBox=React.createClass({
 <div className="col-sm-11">
   <a id="modal-195236" href={'#'+titleID} role="button" className="btn" data-toggle="modal">
   <button  className="btn btn-primary btn-sm">ADD <span className="glyphicon glyphicon-check"></span></button></a>&emsp;&emsp;
-      <a href={this.props.url}><button className="btn btn-success btn-sm">Check full News<span className="glyphicon glyphicon-eye-open"></span></button></a>
+      <a href={this.props.newsObj.url}><button className="btn btn-success btn-sm">Check full News<span className="glyphicon glyphicon-eye-open"></span></button></a>
 </div>
 </div>
       </div>

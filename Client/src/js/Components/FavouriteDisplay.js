@@ -1,6 +1,31 @@
 var React = require('react');
 var FavouriteDisplay= React.createClass({
 
+  deleteFavNews:function()
+{
+  //alert(title);
+  var toBeDeleteObj = this.props.newsObj;
+  url = this.props.newsObj.url;
+  alert(url);
+  var deleteFromURL = this.props.del.bind(null,url);
+ $.ajax({
+   url:'http://localhost:8080/news/delete/',
+   type: 'DELETE',
+   data : toBeDeleteObj,
+
+   success: function(data)
+   {
+     alert(url);
+     deleteFromURL();
+     console.log(data+"hello");
+   }.bind(this),
+   error: function(err)
+   {
+     console.log(err);
+   }.bind(this)
+ });
+ },
+
   render: function(){
     return (
       <div className="container" id="movieElement">
@@ -33,7 +58,8 @@ var FavouriteDisplay= React.createClass({
 <label className="col-sm-1 control-label" htmlFor="formGroupInputLarge"></label>
 <div className="col-sm-11">
   <a id="modal-195236" href="#modal-container-195236" role="button" className="btn" data-toggle="modal">
-  <button  className="btn btn-primary btn-sm">ADD <span className="glyphicon glyphicon-check"></span></button></a>&emsp;&emsp;
+  <button  className="btn btn-primary btn-sm">UPDATE <span className="glyphicon glyphicon-check"></span></button></a>&emsp;&emsp;
+  <button onClick={this.deleteFavNews} className="btn btn-primary btn-sm">DELETE <span className="glyphicon glyphicon-trash"></span></button>&emsp;&emsp;
       <a href={this.props.url}><button className="btn btn-success btn-sm">Check full News<span className="glyphicon glyphicon-eye-open"></span></button></a>
 </div>
 </div>
