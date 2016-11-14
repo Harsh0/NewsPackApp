@@ -12,7 +12,7 @@ var ListFav = React.createClass({
       obj={};
     }
         $.ajax({
-            url:"http://localhost:8090/news/get",
+            url:"http://localhost:8080/news/get",
             type:'POST',
             data:obj,
             dataType: 'JSON',
