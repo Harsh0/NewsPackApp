@@ -26370,40 +26370,13 @@ var React=require('react');
 
 var NewsDisplayBox=React.createClass({displayName: "NewsDisplayBox",
 
-  //Ajax call to add news.
   addMovies(){
-<<<<<<< HEAD
-    alert("hello");
-    var category = this.refs.category.value;
-    var comment = this.refs.comment.value;
-    alert(category);
-    alert(comment);
-    var newsToStore = {
-      'author': this.props.author,
-      'title': this.props.title,
-      'description':this.props.description,
-      'url':this.props.url,
-      'urlToImage':this.props.urlToImage,
-      'publishedAt':this.props.publishedAt,
-      'category':category,
-      'comment':comment,
-    }
-    console.log(newsToStore);
-    $.ajax({
-      url:'http://localhost:8080/news/add',
-      type: 'POST',
-      data:newsToStore,
-
-      success: function(data)
-      {
-=======
     var newsObj=this.props.newsObj;
     $.ajax({
       url:'http://localhost:8080/news/add',
       type: 'POST',
       data:newsObj,
       success: function(data){
->>>>>>> 63bd84945c57bfcb1bd290a90597a39471a11ecb
        alert(data);
       }.bind(this),
       error: function(err){
@@ -26413,7 +26386,6 @@ var NewsDisplayBox=React.createClass({displayName: "NewsDisplayBox",
   },
   render: function(){
     return (
-      //div components to create the news box.
       React.createElement("div", {className: "container", id: "movieElement"}, 
       React.createElement("div", {style: {backgroundColor:'#CCCCCC'}, className: "row"}, 
       React.createElement("div", {className: "col-xs-4"}, 
@@ -26443,14 +26415,8 @@ var NewsDisplayBox=React.createClass({displayName: "NewsDisplayBox",
   React.createElement("div", {className: "form-group form-group-sm"}, 
 React.createElement("label", {className: "col-sm-1 control-label", htmlFor: "formGroupInputLarge"}), 
 React.createElement("div", {className: "col-sm-11"}, 
-<<<<<<< HEAD
-  React.createElement("a", {id: "modal-195236", href: "#modal-container-195236", role: "button", className: "btn", "data-toggle": "modal"}, 
-  React.createElement("button", {className: "btn btn-primary btn-sm"}, "ADD ", React.createElement("span", {className: "glyphicon glyphicon-check"}))), "  ", 
-      React.createElement("a", {href: this.props.url}, React.createElement("button", {className: "btn btn-success btn-sm"}, "Check full News", React.createElement("span", {className: "glyphicon glyphicon-eye-open"})))
-=======
       React.createElement("button", {onClick: this.addMovies, className: "btn btn-primary btn-sm"}, "ADD ", React.createElement("span", {className: "glyphicon glyphicon-check"})), "  ", 
       React.createElement("a", {href: this.props.newsObj.url, target: "_blank"}, React.createElement("button", {className: "btn btn-success btn-sm"}, "Check full News", React.createElement("span", {className: "glyphicon glyphicon-eye-open"})))
->>>>>>> 63bd84945c57bfcb1bd290a90597a39471a11ecb
 )
 )
       )
@@ -26459,52 +26425,7 @@ React.createElement("div", {className: "col-sm-11"},
       React.createElement("div", {className: "col-md-12"}, 
       React.createElement("p", null)
       )
-      ), 
-      React.createElement("div", {className: "modal fade", id: "modal-container-195236", role: "dialog", "aria-labelledby": "myModalLabel", "aria-hidden": "true"}, 
-				React.createElement("div", {className: "modal-dialog"}, 
-					React.createElement("div", {className: "modal-content"}, 
-						React.createElement("div", {className: "modal-header"}, 
-
-							React.createElement("button", {type: "button", className: "close", "data-dismiss": "modal", "aria-hidden": "true"}, 
-								"×"
-							), 
-							React.createElement("h4", {className: "modal-title", id: "myModalLabel"}, 
-								"Modal title"
-							)
-						), 
-            React.createElement("div", {className: "modal-body"}, 
-							React.createElement("p", null, 
-								React.createElement("small", {className: "text-muted"}, "Mention your Category------")
-							), 
-							React.createElement("hr", null), 
-							React.createElement("form", {className: "form-horizontal", action: "index.html", method: "post"}, 
-								React.createElement("div", {className: "form-group"}, 
-									React.createElement("label", {className: "col-lg-2 control-label", htmlFor: "inputName"}, "Category"), 
-									React.createElement("div", {className: "col-lg-10"}, 
-										React.createElement("input", {type: "text", ref: "category", className: "form-control", placeholder: "Category"})
-									)
-								), 
-								React.createElement("div", {className: "form-group"}, 
-									React.createElement("label", {className: "col-lg-2 control-label", htmlFor: "inputEmail"}, "Comments"), 
-									React.createElement("div", {className: "col-lg-10"}, 
-										React.createElement("input", {type: "text", ref: "comment", className: "form-control", placeholder: "Comments"})
-									)
-								)
-							)
-						), 
-						React.createElement("div", {className: "modal-footer"}, 
-							React.createElement("button", {type: "button", className: "btn btn-default", "data-dismiss": "modal"}, 
-								"Close"
-							), 
-							React.createElement("button", {onClick: this.addMovies, type: "button", className: "btn btn-success"}, 
-								"Save changes"
-							)
-						)
-					)
-
-				)
-
-			)
+      )
       )
     );
   }
@@ -26518,13 +26439,7 @@ var {browserHistory, Route, Router, IndexRoute,hasHistory} = require('react-rout
 var HomeComponent = require('./Components/Home.js');
 var LoginComponent = require('./Components/LoginComponent.js');
 var LogoutComponent = require('./Components/LogoutComponent.js');
-<<<<<<< HEAD
-//Applying Navbar Component to the page.
-var Navbar2 = require('./Components/Navbar2.js');
-//Applying Footer Component to the page.
-=======
 var Navbar = require('./Components/Navbar.js');
->>>>>>> 63bd84945c57bfcb1bd290a90597a39471a11ecb
 var Footer = require('./Components/Footer.js');
 
 var MainComponent = React.createClass({displayName: "MainComponent",
@@ -26543,11 +26458,10 @@ var MainComponent = React.createClass({displayName: "MainComponent",
     );
   }
 });
-//Rendering the different components.
+//when the method is called, this method gets instantiated, and returns the virtual DOM. after getting V DOM, it renders and display this div tagfrom index.
 ReactDOM.render(
   React.createElement(Router, {history: browserHistory}, 
   React.createElement(Route, {path: "/", component: MainComponent}, 
-  "//IndexRoute allows to open a particular components as a Home Page.", 
   React.createElement(IndexRoute, {component: HomeComponent}), 
   React.createElement(Route, {path: "/about", component: LogoutComponent}), 
   React.createElement(Route, {path: "/home", component: HomeComponent}), 
