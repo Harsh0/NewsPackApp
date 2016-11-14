@@ -16,6 +16,7 @@ router.route("/signup").post(function(req, res, next) {
   var Obj = req.body;/*object has two fields Username And Password*/
   Obj["category"]=["Others"];/*adding a default category Others*/
   if(check(Obj)){
+    Obj.name={first:Obj.firstName,last:Obj.lastName};
     Obj = new User(Obj);/*filter the content according to Schema*/
     User.findOne({username:Obj.username},function(err,data){
       if(err)
@@ -71,13 +72,8 @@ router.route("/categories").get(isLoggedIn,function(req,res,next){
 
 
 function check(obj){
-  if(obj.name){
-    if(!obj.name.first)
-    return false;
-  }
-  else{
-    return false;
-  }
+  if(!obj.firstName)
+  return false;
   if(!obj.username)
   return false;
   if(!obj.email)

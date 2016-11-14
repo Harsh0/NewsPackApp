@@ -4,7 +4,7 @@ var LoginComponent = React.createClass({
 checkUser:function(){
   var userObj={"username":this.refs.userName.value,"password":this.refs.passWord.value};
   $.ajax({
-    url:'http://localhost:8080/login',
+    url:'http://localhost:8090/login',
     type: 'POST',
     data:userObj,
     dataType:"JSON",
