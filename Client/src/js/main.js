@@ -6,6 +6,7 @@ var LoginComponent = require('./Components/LoginComponent.js');
 var LogoutComponent = require('./Components/LogoutComponent.js');
 var Navbar = require('./Components/Navbar.js');
 var Footer = require('./Components/Footer.js');
+var ListFav = require('./Components/ListFavouriteComponent.js');
 
 var MainComponent = React.createClass({
   render:function(){
@@ -30,6 +31,7 @@ ReactDOM.render(
   <IndexRoute component={HomeComponent}/>
   <Route path="/about" component={LogoutComponent}/>
   <Route path="/home" component={HomeComponent}/>
+  <Route path="/ListFav" component={ListFav}/>
   <Route path="/login" component={LoginComponent}/>
   <Route path="/logout" component={LogoutComponent}/>
   </Route>
