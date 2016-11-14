@@ -4,15 +4,14 @@ var {browserHistory, Route, Router, IndexRoute,hasHistory} = require('react-rout
 var HomeComponent = require('./Components/Home.js');
 var LoginComponent = require('./Components/LoginComponent.js');
 var LogoutComponent = require('./Components/LogoutComponent.js');
-var Navbar2 = require('./Components/Navbar2.js');
+var Navbar = require('./Components/Navbar.js');
 var Footer = require('./Components/Footer.js');
-
 
 var MainComponent = React.createClass({
   render:function(){
     return (
       <div>
-      <Navbar2 />
+      <Navbar />
       {this.props.children}
       <br/>
       <br/>
@@ -31,6 +30,7 @@ ReactDOM.render(
   <IndexRoute component={HomeComponent}/>
   <Route path="/about" component={LogoutComponent}/>
   <Route path="/home" component={HomeComponent}/>
+  <Route path="/login" component={LoginComponent}/>
+  <Route path="/logout" component={LogoutComponent}/>
   </Route>
-
   </Router>,document.getElementById('app'));
