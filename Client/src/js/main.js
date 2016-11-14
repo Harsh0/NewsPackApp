@@ -3,6 +3,7 @@ var ReactDOM = require('react-dom');
 var {browserHistory, Route, Router, IndexRoute,hasHistory} = require('react-router');
 var HomeComponent = require('./Components/Home.js');
 var LoginComponent = require('./Components/LoginComponent.js');
+var SignupComponent = require('./Components/Signup.js');
 var LogoutComponent = require('./Components/LogoutComponent.js');
 var Navbar = require('./Components/Navbar.js');
 var Footer = require('./Components/Footer.js');
@@ -32,6 +33,7 @@ ReactDOM.render(
   <Route path="/about" component={LogoutComponent}/>
   <Route path="/home" component={HomeComponent}/>
   <Route path="/ListFav" component={ListFav}/>
+  <Route path="/signup" component={SignupComponent}/>
   <Route path="/login" component={LoginComponent}/>
   <Route path="/logout" component={LogoutComponent}/>
   </Route>

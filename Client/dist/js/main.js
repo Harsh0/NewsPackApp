@@ -26384,7 +26384,6 @@ module.exports = HomeComponent;
 var React = require('react');
 var FavouriteDisplay= require('./FavouriteDisplay.js');
 var ListFav = React.createClass({displayName: "ListFav",
-<<<<<<< HEAD
 
    getInitialState:function()
    {
@@ -26392,19 +26391,10 @@ var ListFav = React.createClass({displayName: "ListFav",
        newsData:[]
      }
    },
-  getNews: function(){
-=======
-  getInitialState:function()
-  {
-    return {
-      Ndata:[]
-    }
-  },
   getNews: function(obj){
     if(!obj){
       obj={};
     }
->>>>>>> 615e4e486b13ae53545a8b9eded232291be18c52
         $.ajax({
             url:"http://localhost:8080/news/get",
             type:'POST',
@@ -26551,7 +26541,7 @@ var Navbar = React.createClass({displayName: "Navbar",
       React.createElement("div", {className: "collapse navbar-collapse", id: "bs-example-navbar-collapse-1"}, 
       React.createElement("ul", {className: "nav navbar-nav navbar-right"}, 
       React.createElement("li", null, React.createElement(Link, {style: {fontSize: 20,color:'#ffffff'}, to: "/ListFav"}, "ListFavouriteComponent ", React.createElement("span", {className: "glyphicon glyphicon-pencil"}))), 
-      React.createElement("li", null, React.createElement(Link, {style: {fontSize: 20,color:'#ffffff'}, to: "/search"}, "SIGN UP ", React.createElement("span", {className: "glyphicon glyphicon-pencil"}))), 
+      React.createElement("li", null, React.createElement(Link, {style: {fontSize: 20,color:'#ffffff'}, to: "/signup"}, "SIGN UP ", React.createElement("span", {className: "glyphicon glyphicon-pencil"}))), 
       React.createElement("li", null, React.createElement(Link, {style: {fontSize: 20,color:'#ffffff'}, to: "/login"}, "LOGIN ", React.createElement("span", {className: "glyphicon glyphicon-log-in"}))), 
       React.createElement("li", null, React.createElement(Link, {style: {fontSize: 20,color:'#ffffff'}, to: "/logout"}, "LOGOUT ", React.createElement("span", {className: "glyphicon glyphicon-log-out"})))
       ), 
@@ -26772,10 +26762,98 @@ var SearchComponent=React.createClass({displayName: "SearchComponent",
 module.exports=SearchComponent;
 },{"react":232}],245:[function(require,module,exports){
 var React = require('react');
+var {browserHistory} = require('react-router');
+var Signup = React.createClass({displayName: "Signup",
+
+    signUpFunction : function(){
+                var firstname = this.refs.fname.value;
+                var lastname= this.refs.lname.value;
+                var email = this.refs.email.value;
+                var username = this.refs.userName.value;
+                var password = this.refs.pass.value;
+                var confirmpass = this.refs.confirmPass.value;
+                if (password==confirmpass)
+                {
+                var signupForm = {
+                    'firstName':this.refs.fname.value,
+                    'lastName':this.refs.lname.value,
+                    'email':this.refs.email.value,
+                    'username': this.refs.userName.value,
+                    'password': this.refs.pass.value,
+                                        }
+                //object1 = JSON.stringify(object1);
+                console.log(signupForm);
+                $.ajax({
+                    url:'http://localhost:8080/user/signup',
+                    type: 'POST',
+                    data: signupForm,
+                    success: function(data)
+                    {
+                        console.log(data);
+                        browserHistory.push('/');
+                    }.bind(this),
+                    error: function(err)
+                    {
+                        console.log(err);
+                    }.bind(this)
+                    });
+                }
+                else
+                {
+                        alert("password and confirm password have to be same !!");
+                }
+
+},
+
+ render:function(){
+   return (
+
+       React.createElement("div", {className: "container"}, 
+           React.createElement("h1", {className: "form-signin-heading"}, "Please SIGN UP"), 
+           React.createElement("div", {className: "input-group input-group-lg"}, 
+               React.createElement("span", {className: "input-group-addon"}, "First Name"), 
+               React.createElement("input", {type: "text", ref: "fname", className: "form-control"})
+           ), 
+           React.createElement("br", null), 
+           React.createElement("div", {className: "input-group input-group-lg"}, 
+               React.createElement("span", {className: "input-group-addon"}, "Last Name "), 
+               React.createElement("input", {type: "text", ref: "lname", className: "form-control"})
+           ), 
+           React.createElement("br", null), 
+           React.createElement("div", {className: "input-group input-group-lg"}, 
+               React.createElement("span", {className: "input-group-addon"}, " Email ID"), 
+               React.createElement("input", {type: "email", ref: "email", className: "form-control"})
+           ), 
+           React.createElement("br", null), 
+           React.createElement("div", {className: "input-group input-group-lg"}, 
+               React.createElement("span", {className: "input-group-addon"}, "User Name"), 
+               React.createElement("input", {type: "text", ref: "userName", className: "form-control"})
+           ), 
+           React.createElement("br", null), 
+           React.createElement("div", {className: "input-group input-group-lg"}, 
+               React.createElement("span", {className: "input-group-addon"}, "  Password  "), 
+               React.createElement("input", {type: "password", ref: "pass", className: "form-control"})
+           ), 
+           React.createElement("br", null), 
+           React.createElement("div", {className: "input-group input-group-lg"}, 
+               React.createElement("span", {className: "input-group-addon"}, "Confirm Password"), 
+               React.createElement("input", {type: "password", ref: "confirmPass", className: "form-control"})
+           ), 
+           React.createElement("br", null), 
+           React.createElement("button", {onClick: this.signUpFunction, className: "btn btn-lg btn-primary btn-block"}, "SIGN UP"), 
+           React.createElement("br", null)
+       )
+
+)}
+});
+module.exports=Signup;
+},{"react":232,"react-router":81}],246:[function(require,module,exports){
+var React = require('react');
 var ReactDOM = require('react-dom');
 var {browserHistory, Route, Router, IndexRoute,hasHistory} = require('react-router');
 var HomeComponent = require('./Components/Home.js');
 var LoginComponent = require('./Components/LoginComponent.js');
+var SignupComponent = require('./Components/Signup.js');
 var LogoutComponent = require('./Components/LogoutComponent.js');
 var Navbar = require('./Components/Navbar.js');
 var Footer = require('./Components/Footer.js');
@@ -26805,8 +26883,9 @@ ReactDOM.render(
   React.createElement(Route, {path: "/about", component: LogoutComponent}), 
   React.createElement(Route, {path: "/home", component: HomeComponent}), 
   React.createElement(Route, {path: "/ListFav", component: ListFav}), 
+  React.createElement(Route, {path: "/signup", component: SignupComponent}), 
   React.createElement(Route, {path: "/login", component: LoginComponent}), 
   React.createElement(Route, {path: "/logout", component: LogoutComponent})
   )
   ),document.getElementById('app'));
-},{"./Components/Footer.js":237,"./Components/Home.js":238,"./Components/ListFavouriteComponent.js":239,"./Components/LoginComponent.js":240,"./Components/LogoutComponent.js":241,"./Components/Navbar.js":242,"react":232,"react-dom":51,"react-router":81}]},{},[245]);
+},{"./Components/Footer.js":237,"./Components/Home.js":238,"./Components/ListFavouriteComponent.js":239,"./Components/LoginComponent.js":240,"./Components/LogoutComponent.js":241,"./Components/Navbar.js":242,"./Components/Signup.js":245,"react":232,"react-dom":51,"react-router":81}]},{},[246]);

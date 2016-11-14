@@ -1,7 +1,6 @@
 var React = require('react');
 var FavouriteDisplay= require('./FavouriteDisplay.js');
 var ListFav = React.createClass({
-<<<<<<< HEAD
 
    getInitialState:function()
    {
@@ -9,19 +8,10 @@ var ListFav = React.createClass({
        newsData:[]
      }
    },
-  getNews: function(){
-=======
-  getInitialState:function()
-  {
-    return {
-      Ndata:[]
-    }
-  },
   getNews: function(obj){
     if(!obj){
       obj={};
     }
->>>>>>> 615e4e486b13ae53545a8b9eded232291be18c52
         $.ajax({
             url:"http://localhost:8080/news/get",
             type:'POST',
