@@ -26156,6 +26156,31 @@ var React = require('react');
 var SearchComponent = require('./SearchComponent')
 var FavouriteDisplay= React.createClass({displayName: "FavouriteDisplay",
 
+  deleteFavNews:function()
+{
+  //alert(title);
+  var toBeDeleteObj = this.props.newsObj;
+  url = this.props.newsObj.url;
+  alert(url);
+  var deleteFromURL = this.props.del.bind(null,url);
+ $.ajax({
+   url:'http://localhost:8080/news/delete/',
+   type: 'DELETE',
+   data : toBeDeleteObj,
+
+   success: function(data)
+   {
+     alert(url);
+     deleteFromURL();
+     console.log(data+"hello");
+   }.bind(this),
+   error: function(err)
+   {
+     console.log(err);
+   }.bind(this)
+ });
+ },
+
   render: function(){
     return (
       React.createElement("div", {className: "container", id: "movieElement"}, 
@@ -26189,7 +26214,8 @@ var FavouriteDisplay= React.createClass({displayName: "FavouriteDisplay",
 React.createElement("label", {className: "col-sm-1 control-label", htmlFor: "formGroupInputLarge"}), 
 React.createElement("div", {className: "col-sm-11"}, 
   React.createElement("a", {id: "modal-195236", href: "#modal-container-195236", role: "button", className: "btn", "data-toggle": "modal"}, 
-  React.createElement("button", {className: "btn btn-primary btn-sm"}, "ADD ", React.createElement("span", {className: "glyphicon glyphicon-check"}))), "  ", 
+  React.createElement("button", {className: "btn btn-primary btn-sm"}, "UPDATE ", React.createElement("span", {className: "glyphicon glyphicon-check"}))), "  ", 
+  React.createElement("button", {onClick: this.deleteFavNews, className: "btn btn-primary btn-sm"}, "DELETE ", React.createElement("span", {className: "glyphicon glyphicon-trash"})), "  ", 
       React.createElement("a", {href: this.props.url}, React.createElement("button", {className: "btn btn-success btn-sm"}, "Check full News", React.createElement("span", {className: "glyphicon glyphicon-eye-open"})))
 )
 )
@@ -26358,6 +26384,16 @@ module.exports = HomeComponent;
 var React = require('react');
 var FavouriteDisplay= require('./FavouriteDisplay.js');
 var ListFav = React.createClass({displayName: "ListFav",
+<<<<<<< HEAD
+
+   getInitialState:function()
+   {
+     return {
+       newsData:[]
+     }
+   },
+  getNews: function(){
+=======
   getInitialState:function()
   {
     return {
@@ -26368,13 +26404,14 @@ var ListFav = React.createClass({displayName: "ListFav",
     if(!obj){
       obj={};
     }
+>>>>>>> 615e4e486b13ae53545a8b9eded232291be18c52
         $.ajax({
             url:"http://localhost:8080/news/get",
             type:'POST',
             data:obj,
             dataType: 'JSON',
             success: function(data) {
-             this.setState({Ndata:data});
+             this.setState({newsData:data});
            }.bind(this),
              error:function(err){
                  console.log(err);
@@ -26384,15 +26421,31 @@ var ListFav = React.createClass({displayName: "ListFav",
   componentDidMount:function() {
     this.getNews();
   },
+deletemovie:function(url){
+  alert(url);
+  var temp = this.state.newsData;
+  j=-1;
+  for(var i=0;i<temp.length;i++){
+    if(temp[i].url==url){
+      j=i;
+      break;
+    }
+  }
+  if(j>-1){
+    temp.splice(j,1);
+  }
+  this.setState({newsData:temp})
+},
    render:function(){
      var News;
-     if(this.state.Ndata.length==0)
+     if(this.state.newsData.length==0)
      {
       News =  React.createElement("h1", null, "No favourite news added")
      }
      else {
-        News = this.state.Ndata.map(function(news) {
-         return (React.createElement(FavouriteDisplay, {newsObj: news})
+       var te  = this.deletemovie;
+        News = this.state.newsData.map(function(news) {
+         return (React.createElement(FavouriteDisplay, {newsObj: news, del: te})
          );
         });
      }
@@ -26493,7 +26546,7 @@ var Navbar = React.createClass({displayName: "Navbar",
       React.createElement("nav", {className: "navbar navbar-default"}, 
       React.createElement("div", {style: {backgroundColor:"#009595"}, className: "container-fluid"}, 
       React.createElement("div", {style: {color:'#ffffff'}, className: "navbar-header"}, 
-      React.createElement("a", {className: "navbar-brand", href: "#"}, React.createElement("img", {alt: "Brand", src: "../css/d.png"}))
+      React.createElement("a", {className: "navbar-brand", href: "http://localhost:8080"}, React.createElement("img", {alt: "Brand", src: "../css/d.png"}))
       ), 
       React.createElement("div", {className: "collapse navbar-collapse", id: "bs-example-navbar-collapse-1"}, 
       React.createElement("ul", {className: "nav navbar-nav navbar-right"}, 
@@ -26519,18 +26572,15 @@ var NewsDisplayBox=React.createClass({displayName: "NewsDisplayBox",
 
   //Ajax call to add news.
   addMovies(){
-    alert("hello");
     var category = this.refs.category.value;
     var comment = this.refs.comment.value;
-    alert(category);
-    alert(comment);
     var newsToStore = {
-      'author': this.props.author,
-      'title': this.props.title,
-      'description':this.props.description,
-      'url':this.props.url,
-      'urlToImage':this.props.urlToImage,
-      'publishedAt':this.props.publishedAt,
+      'author': this.props.newsObj.author,
+      'title': this.props.newsObj.title,
+      'description':this.props.newsObj.description,
+      'url':this.props.newsObj.url,
+      'urlToImage':this.props.newsObj.urlToImage,
+      'publishedAt':this.props.newsObj.publishedAt,
       'category':category,
       'comment':comment,
     }
@@ -26551,6 +26601,17 @@ var NewsDisplayBox=React.createClass({displayName: "NewsDisplayBox",
     });
   },
   render: function(){
+    var title=this.props.newsObj.publishedAt;
+    var titleID='';
+    for(var i=0;i<title.length;++i){
+      if(title.charAt(i)==='-'||title.charAt(i)===':'){
+        continue;
+      }
+      else{
+        titleID+=title.charAt(i);
+      }
+    }
+    console.log(titleID);
     return (
       React.createElement("div", {className: "container", id: "movieElement"}, 
       React.createElement("div", {style: {backgroundColor:'#CCCCCC'}, className: "row"}, 
@@ -26581,9 +26642,9 @@ var NewsDisplayBox=React.createClass({displayName: "NewsDisplayBox",
   React.createElement("div", {className: "form-group form-group-sm"}, 
 React.createElement("label", {className: "col-sm-1 control-label", htmlFor: "formGroupInputLarge"}), 
 React.createElement("div", {className: "col-sm-11"}, 
-  React.createElement("a", {id: "modal-195236", href: "#modal-container-195236", role: "button", className: "btn", "data-toggle": "modal"}, 
+  React.createElement("a", {id: "modal-195236", href: '#'+titleID, role: "button", className: "btn", "data-toggle": "modal"}, 
   React.createElement("button", {className: "btn btn-primary btn-sm"}, "ADD ", React.createElement("span", {className: "glyphicon glyphicon-check"}))), "  ", 
-      React.createElement("a", {href: this.props.url}, React.createElement("button", {className: "btn btn-success btn-sm"}, "Check full News", React.createElement("span", {className: "glyphicon glyphicon-eye-open"})))
+      React.createElement("a", {href: this.props.newsObj.url}, React.createElement("button", {className: "btn btn-success btn-sm"}, "Check full News", React.createElement("span", {className: "glyphicon glyphicon-eye-open"})))
 )
 )
       )
@@ -26594,7 +26655,7 @@ React.createElement("div", {className: "col-sm-11"},
       )
       ), 
       "//Modal Window to save category and commnets.", 
-      React.createElement("div", {className: "modal fade", id: "modal-container-195236", role: "dialog", "aria-labelledby": "myModalLabel", "aria-hidden": "true"}, 
+      React.createElement("div", {className: "modal fade", id: titleID, role: "dialog", "aria-labelledby": "myModalLabel", "aria-hidden": "true"}, 
 				React.createElement("div", {className: "modal-dialog"}, 
 					React.createElement("div", {className: "modal-content"}, 
 						React.createElement("div", {className: "modal-header"}, 

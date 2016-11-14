@@ -4,18 +4,15 @@ var NewsDisplayBox=React.createClass({
 
   //Ajax call to add news.
   addMovies(){
-    alert("hello");
     var category = this.refs.category.value;
     var comment = this.refs.comment.value;
-    alert(category);
-    alert(comment);
     var newsToStore = {
-      'author': this.props.author,
-      'title': this.props.title,
-      'description':this.props.description,
-      'url':this.props.url,
-      'urlToImage':this.props.urlToImage,
-      'publishedAt':this.props.publishedAt,
+      'author': this.props.newsObj.author,
+      'title': this.props.newsObj.title,
+      'description':this.props.newsObj.description,
+      'url':this.props.newsObj.url,
+      'urlToImage':this.props.newsObj.urlToImage,
+      'publishedAt':this.props.newsObj.publishedAt,
       'category':category,
       'comment':comment,
     }
@@ -36,6 +33,17 @@ var NewsDisplayBox=React.createClass({
     });
   },
   render: function(){
+    var title=this.props.newsObj.publishedAt;
+    var titleID='';
+    for(var i=0;i<title.length;++i){
+      if(title.charAt(i)==='-'||title.charAt(i)===':'){
+        continue;
+      }
+      else{
+        titleID+=title.charAt(i);
+      }
+    }
+    console.log(titleID);
     return (
       <div className="container" id="movieElement">
       <div style={{backgroundColor:'#CCCCCC'}} className="row">
@@ -66,9 +74,9 @@ var NewsDisplayBox=React.createClass({
   <div className="form-group form-group-sm">
 <label className="col-sm-1 control-label" htmlFor="formGroupInputLarge"></label>
 <div className="col-sm-11">
-  <a id="modal-195236" href="#modal-container-195236" role="button" className="btn" data-toggle="modal">
+  <a id="modal-195236" href={'#'+titleID} role="button" className="btn" data-toggle="modal">
   <button  className="btn btn-primary btn-sm">ADD <span className="glyphicon glyphicon-check"></span></button></a>&emsp;&emsp;
-      <a href={this.props.url}><button className="btn btn-success btn-sm">Check full News<span className="glyphicon glyphicon-eye-open"></span></button></a>
+      <a href={this.props.newsObj.url}><button className="btn btn-success btn-sm">Check full News<span className="glyphicon glyphicon-eye-open"></span></button></a>
 </div>
 </div>
       </div>
@@ -79,7 +87,7 @@ var NewsDisplayBox=React.createClass({
       </div>
       </div>
       //Modal Window to save category and commnets.
-      <div className="modal fade" id="modal-container-195236" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div className="modal fade" id={titleID} role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div className="modal-dialog">
 					<div className="modal-content">
 						<div className="modal-header">
