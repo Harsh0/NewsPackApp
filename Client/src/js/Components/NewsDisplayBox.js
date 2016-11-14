@@ -33,6 +33,17 @@ var NewsDisplayBox=React.createClass({
     });
   },
   render: function(){
+    var title=this.props.newsObj.publishedAt;
+    var titleID='';
+    for(var i=0;i<title.length;++i){
+      if(title.charAt(i)==='-'||title.charAt(i)===':'){
+        continue;
+      }
+      else{
+        titleID+=title.charAt(i);
+      }
+    }
+    console.log(titleID);
     return (
       <div className="container" id="movieElement">
       <div style={{backgroundColor:'#CCCCCC'}} className="row">
@@ -63,7 +74,7 @@ var NewsDisplayBox=React.createClass({
   <div className="form-group form-group-sm">
 <label className="col-sm-1 control-label" htmlFor="formGroupInputLarge"></label>
 <div className="col-sm-11">
-  <a id="modal-195236" href="#modal-container-195236" role="button" className="btn" data-toggle="modal">
+  <a id="modal-195236" href={'#'+titleID} role="button" className="btn" data-toggle="modal">
   <button  className="btn btn-primary btn-sm">ADD <span className="glyphicon glyphicon-check"></span></button></a>&emsp;&emsp;
       <a href={this.props.url}><button className="btn btn-success btn-sm">Check full News<span className="glyphicon glyphicon-eye-open"></span></button></a>
 </div>
@@ -76,7 +87,7 @@ var NewsDisplayBox=React.createClass({
       </div>
       </div>
       //Modal Window to save category and commnets.
-      <div className="modal fade" id="modal-container-195236" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div className="modal fade" id={titleID} role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div className="modal-dialog">
 					<div className="modal-content">
 						<div className="modal-header">

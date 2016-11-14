@@ -26401,6 +26401,17 @@ var NewsDisplayBox=React.createClass({displayName: "NewsDisplayBox",
     });
   },
   render: function(){
+    var title=this.props.newsObj.publishedAt;
+    var titleID='';
+    for(var i=0;i<title.length;++i){
+      if(title.charAt(i)==='-'||title.charAt(i)===':'){
+        continue;
+      }
+      else{
+        titleID+=title.charAt(i);
+      }
+    }
+    console.log(titleID);
     return (
       React.createElement("div", {className: "container", id: "movieElement"}, 
       React.createElement("div", {style: {backgroundColor:'#CCCCCC'}, className: "row"}, 
@@ -26431,7 +26442,7 @@ var NewsDisplayBox=React.createClass({displayName: "NewsDisplayBox",
   React.createElement("div", {className: "form-group form-group-sm"}, 
 React.createElement("label", {className: "col-sm-1 control-label", htmlFor: "formGroupInputLarge"}), 
 React.createElement("div", {className: "col-sm-11"}, 
-  React.createElement("a", {id: "modal-195236", href: "#modal-container-195236", role: "button", className: "btn", "data-toggle": "modal"}, 
+  React.createElement("a", {id: "modal-195236", href: '#'+titleID, role: "button", className: "btn", "data-toggle": "modal"}, 
   React.createElement("button", {className: "btn btn-primary btn-sm"}, "ADD ", React.createElement("span", {className: "glyphicon glyphicon-check"}))), "  ", 
       React.createElement("a", {href: this.props.url}, React.createElement("button", {className: "btn btn-success btn-sm"}, "Check full News", React.createElement("span", {className: "glyphicon glyphicon-eye-open"})))
 )
@@ -26444,7 +26455,7 @@ React.createElement("div", {className: "col-sm-11"},
       )
       ), 
       "//Modal Window to save category and commnets.", 
-      React.createElement("div", {className: "modal fade", id: "modal-container-195236", role: "dialog", "aria-labelledby": "myModalLabel", "aria-hidden": "true"}, 
+      React.createElement("div", {className: "modal fade", id: titleID, role: "dialog", "aria-labelledby": "myModalLabel", "aria-hidden": "true"}, 
 				React.createElement("div", {className: "modal-dialog"}, 
 					React.createElement("div", {className: "modal-content"}, 
 						React.createElement("div", {className: "modal-header"}, 
