@@ -26371,15 +26371,42 @@ var React=require('react');
 var NewsDisplayBox=React.createClass({displayName: "NewsDisplayBox",
 
   addMovies(){
+<<<<<<< HEAD
     var newsObj=this.props.newsObj;
     $.ajax({
       url:'http://localhost:8080/news/add',
       type: 'POST',
       data:newsObj,
       success: function(data){
+=======
+    alert("hello");
+    var category = this.refs.category.value;
+    var comment = this.refs.comment.value;
+    alert(category);
+    alert(comment);
+    var newsToStore = {
+      'author': this.props.author,
+      'title': this.props.title,
+      'description':this.props.description,
+      'url':this.props.url,
+      'urlToImage':this.props.urlToImage,
+      'publishedAt':this.props.publishedAt,
+      'category':category,
+      'comment':comment,
+    }
+    console.log(newsToStore);
+    $.ajax({
+      url:'http://localhost:8080/news/add',
+      type: 'POST',
+      data:newsToStore,
+
+      success: function(data)
+      {
+>>>>>>> 3ea0cf680685fa9548344c66728e543a0f830e22
        alert(data);
       }.bind(this),
-      error: function(err){
+      error: function(err)
+      {
         console.log(err);
       }.bind(this)
     });
@@ -26415,8 +26442,14 @@ var NewsDisplayBox=React.createClass({displayName: "NewsDisplayBox",
   React.createElement("div", {className: "form-group form-group-sm"}, 
 React.createElement("label", {className: "col-sm-1 control-label", htmlFor: "formGroupInputLarge"}), 
 React.createElement("div", {className: "col-sm-11"}, 
+<<<<<<< HEAD
       React.createElement("button", {onClick: this.addMovies, className: "btn btn-primary btn-sm"}, "ADD ", React.createElement("span", {className: "glyphicon glyphicon-check"})), "  ", 
       React.createElement("a", {href: this.props.newsObj.url, target: "_blank"}, React.createElement("button", {className: "btn btn-success btn-sm"}, "Check full News", React.createElement("span", {className: "glyphicon glyphicon-eye-open"})))
+=======
+  React.createElement("a", {id: "modal-195236", href: "#modal-container-195236", role: "button", className: "btn", "data-toggle": "modal"}, 
+  React.createElement("button", {className: "btn btn-primary btn-sm"}, "ADD ", React.createElement("span", {className: "glyphicon glyphicon-check"}))), "  ", 
+      React.createElement("a", {href: this.props.url}, React.createElement("button", {className: "btn btn-success btn-sm"}, "Check full News", React.createElement("span", {className: "glyphicon glyphicon-eye-open"})))
+>>>>>>> 3ea0cf680685fa9548344c66728e543a0f830e22
 )
 )
       )
@@ -26425,7 +26458,55 @@ React.createElement("div", {className: "col-sm-11"},
       React.createElement("div", {className: "col-md-12"}, 
       React.createElement("p", null)
       )
+<<<<<<< HEAD
       )
+=======
+      ), 
+      "//Modal Window to save category and commnets.", 
+      React.createElement("div", {className: "modal fade", id: "modal-container-195236", role: "dialog", "aria-labelledby": "myModalLabel", "aria-hidden": "true"}, 
+				React.createElement("div", {className: "modal-dialog"}, 
+					React.createElement("div", {className: "modal-content"}, 
+						React.createElement("div", {className: "modal-header"}, 
+
+							React.createElement("button", {type: "button", className: "close", "data-dismiss": "modal", "aria-hidden": "true"}, 
+								"×"
+							), 
+							React.createElement("h4", {className: "modal-title", id: "myModalLabel"}, 
+								"Modal title"
+							)
+						), 
+            React.createElement("div", {className: "modal-body"}, 
+							React.createElement("p", null, 
+								React.createElement("small", {className: "text-muted"}, "Mention your Category------")
+							), 
+							React.createElement("hr", null), 
+							React.createElement("form", {className: "form-horizontal", action: "index.html", method: "post"}, 
+								React.createElement("div", {className: "form-group"}, 
+									React.createElement("label", {className: "col-lg-2 control-label", htmlFor: "inputName"}, "Category"), 
+									React.createElement("div", {className: "col-lg-10"}, 
+										React.createElement("input", {type: "text", ref: "category", className: "form-control", placeholder: "Category"})
+									)
+								), 
+								React.createElement("div", {className: "form-group"}, 
+									React.createElement("label", {className: "col-lg-2 control-label", htmlFor: "inputEmail"}, "Comments"), 
+									React.createElement("div", {className: "col-lg-10"}, 
+										React.createElement("input", {type: "text", ref: "comment", className: "form-control", placeholder: "Comments"})
+									)
+								)
+							)
+						), 
+						React.createElement("div", {className: "modal-footer"}, 
+							React.createElement("button", {type: "button", className: "btn btn-default", "data-dismiss": "modal"}, 
+								"Close"
+							), 
+							React.createElement("button", {onClick: this.addMovies, type: "button", className: "btn btn-success"}, 
+								"Save changes"
+							)
+						)
+					)
+				)
+			)
+>>>>>>> 3ea0cf680685fa9548344c66728e543a0f830e22
       )
     );
   }
