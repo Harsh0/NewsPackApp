@@ -26137,9 +26137,9 @@ var NewsDisplayBox = require('./NewsDisplayBox.js');
 
 var DisplayNews = React.createClass({displayName: "DisplayNews",
   render : function () {
-    var newsArray = this.props.movieObj.map(function(news) {
+    var newsArray = this.props.newsObj.map(function(news) {
       return(
-        React.createElement(NewsDisplayBox, {movieObj: news, author: news.author, title: news.title, description: news.description, publishedAt: news.publishedAt, urlToImage: news.urlToImage, url: news.url})
+        React.createElement(NewsDisplayBox, {newsObj: news})
       )
     });
     return(
@@ -26177,7 +26177,7 @@ var Footer = React.createClass({displayName: "Footer",
                     React.createElement("span", {className: "fa fa-youtube-play"}), " "
                 ), 
                 React.createElement("div", {className: "col-sm-2"}, 
-                  React.createElement("h6", null, "Coded  With  ", React.createElement("span", {className: "glyphicon glyphicon-heart"}), "  by  SHUBHAM")
+                  React.createElement("h6", null, "Coded  With  ", React.createElement("span", {className: "glyphicon glyphicon-heart"}), "  by  Team Ninja")
                 )
               )
             )
@@ -26193,22 +26193,22 @@ var {Link} = require('react-router');
 var DisplayNews = require('./DisplayNews.js');
 
 var HomeComponent = React.createClass({displayName: "HomeComponent",
-
-  source(source){
-    alert("hello");
-    var source = source;
-    alert(source);
-
+  getInitialState: function () {
+    return {
+      stateNews : []
+    };
+  },
+  source(str){
+    var source = str;
     $.ajax({
       url:'https://newsapi.org/v1/articles?source='+source+'&apiKey=d39a8bf66cc946f380211c5759769af5',
       type: 'GET',
       dataType: 'JSON',
       success: function(data)
       {
-     //  alert(data);
-         console.log("Ajax login success");
-         this.setState({stateNews:data.articles});
-         console.log(data.articles);
+        console.log("Ajax login success");
+        this.setState({stateNews:data.articles});
+        //console.log(data.articles);
       }.bind(this),
       error: function(err)
       {
@@ -26216,13 +26216,6 @@ var HomeComponent = React.createClass({displayName: "HomeComponent",
       }.bind(this)
     });
   },
-
-  getInitialState: function () {
-    return {
-      stateNews : []
-    };
-  },
-
   render: function() {
     return (
       React.createElement("div", {className: "container-fluid"}, 
@@ -26255,7 +26248,7 @@ var HomeComponent = React.createClass({displayName: "HomeComponent",
         React.createElement("br", null), 
         React.createElement("br", null), 
         React.createElement("br", null), 
-        React.createElement(DisplayNews, {movieObj: this.state.stateNews})
+        React.createElement(DisplayNews, {newsObj: this.state.stateNews})
       )
     )
   }
@@ -26266,16 +26259,8 @@ module.exports = HomeComponent;
 var React = require('react');
 var {browserHistory}= require ('react-router');
 var LoginComponent = React.createClass({displayName: "LoginComponent",
-
-
-checkUser(){
-  //e.preventDefault();
-
-  var username = this.refs.userName.value;
-   alert("Hello"+username);
-  var password = this.refs.passWord.value;
-      alert(password);
-      var userObj={"username":username,"password":password};
+checkUser:function(){
+  var userObj={"username":this.refs.userName.value,"password":this.refs.passWord.value};
   $.ajax({
     url:'http://localhost:8080/login',
     type: 'POST',
@@ -26283,9 +26268,8 @@ checkUser(){
     dataType:"JSON",
     success: function(data)
     {
-   //  alert(data);
    console.log("Ajax login success");
-     browserHistory.push('/search');
+     browserHistory.push('/');
     }.bind(this),
     error: function(err)
     {
@@ -26296,7 +26280,6 @@ checkUser(){
 render : function () {
   return(
     React.createElement("div", {className: "container"}, 
-
         React.createElement("h1", {className: "form-signin-heading"}, "Please LOGIN"), 
         React.createElement("div", {className: "input-group input-group-lg"}, 
             React.createElement("span", {className: "input-group-addon"}, "Username"), 
@@ -26310,8 +26293,7 @@ render : function () {
         React.createElement("br", null), 
         React.createElement("button", {onClick: this.checkUser, className: "btn btn-lg btn-primary btn-block"}, "LOGIN"), 
         React.createElement("br", null)
-
-)
+    )
   )
 }
 });
@@ -26370,8 +26352,8 @@ var Navbar = React.createClass({displayName: "Navbar",
       React.createElement("div", {className: "collapse navbar-collapse", id: "bs-example-navbar-collapse-1"}, 
       React.createElement("ul", {className: "nav navbar-nav navbar-right"}, 
       React.createElement("li", null, React.createElement(Link, {style: {fontSize: 20,color:'#ffffff'}, to: "/search"}, "SIGN UP ", React.createElement("span", {className: "glyphicon glyphicon-pencil"}))), 
-      React.createElement("li", null, React.createElement(Link, {style: {fontSize: 20,color:'#ffffff'}, to: "/savedmovies"}, "LOGIN ", React.createElement("span", {className: "glyphicon glyphicon-log-in"}))), 
-      React.createElement("li", null, React.createElement(Link, {style: {fontSize: 20,color:'#ffffff'}, to: "/about"}, "LOGOUT ", React.createElement("span", {className: "glyphicon glyphicon-log-out"})))
+      React.createElement("li", null, React.createElement(Link, {style: {fontSize: 20,color:'#ffffff'}, to: "/login"}, "LOGIN ", React.createElement("span", {className: "glyphicon glyphicon-log-in"}))), 
+      React.createElement("li", null, React.createElement(Link, {style: {fontSize: 20,color:'#ffffff'}, to: "/logout"}, "LOGOUT ", React.createElement("span", {className: "glyphicon glyphicon-log-out"})))
       ), 
       React.createElement("p", {style: {color:'#009595'}}, "Hello"), 
       React.createElement("p", {style: {color:'#009595'}}, "Hello")
@@ -26390,6 +26372,7 @@ var NewsDisplayBox=React.createClass({displayName: "NewsDisplayBox",
 
   //Ajax call to add news.
   addMovies(){
+<<<<<<< HEAD
     alert("hello");
     var category = this.refs.category.value;
     var comment = this.refs.comment.value;
@@ -26413,15 +26396,21 @@ var NewsDisplayBox=React.createClass({displayName: "NewsDisplayBox",
 
       success: function(data)
       {
+=======
+    var newsObj=this.props.newsObj;
+    $.ajax({
+      url:'http://localhost:8080/news/add',
+      type: 'POST',
+      data:newsObj,
+      success: function(data){
+>>>>>>> 63bd84945c57bfcb1bd290a90597a39471a11ecb
        alert(data);
       }.bind(this),
-      error: function(err)
-      {
+      error: function(err){
         console.log(err);
       }.bind(this)
     });
   },
-
   render: function(){
     return (
       //div components to create the news box.
@@ -26429,7 +26418,7 @@ var NewsDisplayBox=React.createClass({displayName: "NewsDisplayBox",
       React.createElement("div", {style: {backgroundColor:'#CCCCCC'}, className: "row"}, 
       React.createElement("div", {className: "col-xs-4"}, 
       React.createElement("div", null, 
-      React.createElement("img", {style: {width: 350, height: 400}, src: this.props.urlToImage}))
+      React.createElement("img", {style: {width: 350, height: 400}, src: this.props.newsObj.urlToImage}))
       ), 
       React.createElement("div", {className: "col-xs-8"}, 
       React.createElement("p", null), 
@@ -26437,26 +26426,31 @@ var NewsDisplayBox=React.createClass({displayName: "NewsDisplayBox",
       React.createElement("p", null), 
       React.createElement("p", null), 
       React.createElement("div", {style: {fontSize:'30px'}}, 
-      React.createElement("h3", null, this.props.title)
+      React.createElement("h3", null, this.props.newsObj.title)
       ), 
       React.createElement("div", {className: "form-group form-group-sm"}, 
     React.createElement("label", {className: "col-sm-2 control-label", htmlFor: "formGroupInputLarge"}, "Desciprion:"), 
     React.createElement("div", {className: "col-sm-10"}, 
-    React.createElement("input", {className: "form-control", id: "disabledInput", type: "text", placeholder: this.props.description, disabled: true}), React.createElement("p", null)
+    React.createElement("input", {className: "form-control", id: "disabledInput", type: "text", placeholder: this.props.newsObj.description, disabled: true}), React.createElement("p", null)
     )
     ), 
     React.createElement("div", {className: "form-group form-group-sm"}, 
   React.createElement("label", {className: "col-sm-2 control-label", htmlFor: "formGroupInputLarge"}, "Published:"), 
   React.createElement("div", {className: "col-sm-10"}, 
-      React.createElement("input", {className: "form-control", id: "disabledInput", type: "text", placeholder: this.props.publishedAt, disabled: true}), React.createElement("p", null)
+      React.createElement("input", {className: "form-control", id: "disabledInput", type: "text", placeholder: this.props.newsObj.publishedAt, disabled: true}), React.createElement("p", null)
   )
   ), 
   React.createElement("div", {className: "form-group form-group-sm"}, 
 React.createElement("label", {className: "col-sm-1 control-label", htmlFor: "formGroupInputLarge"}), 
 React.createElement("div", {className: "col-sm-11"}, 
+<<<<<<< HEAD
   React.createElement("a", {id: "modal-195236", href: "#modal-container-195236", role: "button", className: "btn", "data-toggle": "modal"}, 
   React.createElement("button", {className: "btn btn-primary btn-sm"}, "ADD ", React.createElement("span", {className: "glyphicon glyphicon-check"}))), "  ", 
       React.createElement("a", {href: this.props.url}, React.createElement("button", {className: "btn btn-success btn-sm"}, "Check full News", React.createElement("span", {className: "glyphicon glyphicon-eye-open"})))
+=======
+      React.createElement("button", {onClick: this.addMovies, className: "btn btn-primary btn-sm"}, "ADD ", React.createElement("span", {className: "glyphicon glyphicon-check"})), "  ", 
+      React.createElement("a", {href: this.props.newsObj.url, target: "_blank"}, React.createElement("button", {className: "btn btn-success btn-sm"}, "Check full News", React.createElement("span", {className: "glyphicon glyphicon-eye-open"})))
+>>>>>>> 63bd84945c57bfcb1bd290a90597a39471a11ecb
 )
 )
       )
@@ -26524,17 +26518,20 @@ var {browserHistory, Route, Router, IndexRoute,hasHistory} = require('react-rout
 var HomeComponent = require('./Components/Home.js');
 var LoginComponent = require('./Components/LoginComponent.js');
 var LogoutComponent = require('./Components/LogoutComponent.js');
+<<<<<<< HEAD
 //Applying Navbar Component to the page.
 var Navbar2 = require('./Components/Navbar2.js');
 //Applying Footer Component to the page.
+=======
+var Navbar = require('./Components/Navbar.js');
+>>>>>>> 63bd84945c57bfcb1bd290a90597a39471a11ecb
 var Footer = require('./Components/Footer.js');
-
 
 var MainComponent = React.createClass({displayName: "MainComponent",
   render:function(){
     return (
       React.createElement("div", null, 
-      React.createElement(Navbar2, null), 
+      React.createElement(Navbar, null), 
       this.props.children, 
       React.createElement("br", null), 
       React.createElement("br", null), 
@@ -26553,8 +26550,9 @@ ReactDOM.render(
   "//IndexRoute allows to open a particular components as a Home Page.", 
   React.createElement(IndexRoute, {component: HomeComponent}), 
   React.createElement(Route, {path: "/about", component: LogoutComponent}), 
-  React.createElement(Route, {path: "/home", component: HomeComponent})
+  React.createElement(Route, {path: "/home", component: HomeComponent}), 
+  React.createElement(Route, {path: "/login", component: LoginComponent}), 
+  React.createElement(Route, {path: "/logout", component: LogoutComponent})
   )
-
   ),document.getElementById('app'));
-},{"./Components/Footer.js":236,"./Components/Home.js":237,"./Components/LoginComponent.js":238,"./Components/LogoutComponent.js":239,"./Components/Navbar2.js":240,"react":232,"react-dom":51,"react-router":81}]},{},[242]);
+},{"./Components/Footer.js":236,"./Components/Home.js":237,"./Components/LoginComponent.js":238,"./Components/LogoutComponent.js":239,"./Components/Navbar.js":240,"react":232,"react-dom":51,"react-router":81}]},{},[242]);

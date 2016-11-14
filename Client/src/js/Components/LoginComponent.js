@@ -1,16 +1,8 @@
 var React = require('react');
 var {browserHistory}= require ('react-router');
 var LoginComponent = React.createClass({
-
-
-checkUser(){
-  //e.preventDefault();
-
-  var username = this.refs.userName.value;
-   alert("Hello"+username);
-  var password = this.refs.passWord.value;
-      alert(password);
-      var userObj={"username":username,"password":password};
+checkUser:function(){
+  var userObj={"username":this.refs.userName.value,"password":this.refs.passWord.value};
   $.ajax({
     url:'http://localhost:8080/login',
     type: 'POST',
@@ -18,9 +10,8 @@ checkUser(){
     dataType:"JSON",
     success: function(data)
     {
-   //  alert(data);
    console.log("Ajax login success");
-     browserHistory.push('/search');
+     browserHistory.push('/');
     }.bind(this),
     error: function(err)
     {
@@ -31,7 +22,6 @@ checkUser(){
 render : function () {
   return(
     <div className="container">
-
         <h1 className="form-signin-heading">Please LOGIN</h1>
         <div className="input-group input-group-lg">
             <span className="input-group-addon">Username</span>
@@ -45,8 +35,7 @@ render : function () {
         <br></br>
         <button onClick={this.checkUser} className="btn btn-lg btn-primary btn-block">LOGIN</button>
         <br></br>
-
-</div>
+    </div>
   )
 }
 });

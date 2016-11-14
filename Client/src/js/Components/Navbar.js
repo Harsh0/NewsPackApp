@@ -13,8 +13,8 @@ var Navbar = React.createClass({
       <div className="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul className="nav navbar-nav navbar-right">
       <li><Link style={{fontSize: 20,color:'#ffffff'}} to="/search">SIGN UP <span className="glyphicon glyphicon-pencil"></span></Link></li>
-      <li><Link style={{fontSize: 20,color:'#ffffff'}} to="/savedmovies">LOGIN <span className="glyphicon glyphicon-log-in"></span></Link></li>
-      <li><Link style={{fontSize: 20,color:'#ffffff'}} to="/about">LOGOUT <span className="glyphicon glyphicon-log-out"></span></Link></li>
+      <li><Link style={{fontSize: 20,color:'#ffffff'}} to="/login">LOGIN <span className="glyphicon glyphicon-log-in"></span></Link></li>
+      <li><Link style={{fontSize: 20,color:'#ffffff'}} to="/logout">LOGOUT <span className="glyphicon glyphicon-log-out"></span></Link></li>
       </ul>
       <p style={{color:'#009595'}}>Hello</p>
       <p style={{color:'#009595'}}>Hello</p>
