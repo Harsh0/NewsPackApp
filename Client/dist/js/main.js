@@ -26259,7 +26259,7 @@ var Footer = React.createClass({displayName: "Footer",
             React.createElement("div", {className: "row"}, 
               React.createElement("div", {className: "col-sm-3"}, 
                 React.createElement("h5", null, "Copyright &copy 2016"), 
-                React.createElement("h5", null, "Movie Search Coorporation")
+                React.createElement("h5", null, "News Search Coorporation")
               ), 
               React.createElement("div", {className: "col-sm-5"}, 
                 React.createElement("h5", null, "About Us"), 
