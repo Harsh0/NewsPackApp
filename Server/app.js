@@ -44,6 +44,12 @@ db.once('open',function(){
 app.use('/user', users);
 app.use('/news', news);
 
+app.get('/logout',function(req,res,next){
+  console.log("Session Deleted");
+  req.logout();
+  res.send("logged out");
+});
+
 app.post('/login',
   passport.authenticate('local', { failureFlash: 'Error',successFlash:'success' }),
   function(req, res) {

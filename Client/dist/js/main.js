@@ -26444,20 +26444,18 @@ render : function () {
 module.exports = LoginComponent;
 },{"react":232,"react-router":81}],241:[function(require,module,exports){
 var React = require('react');
-
+var {browserHistory}= require ('react-router');
 var LogoutComponent = React.createClass({displayName: "LogoutComponent",
 
   logout(){
     $.ajax({
       url:'http://localhost:8080/logout',
-      type: 'POST',
-      data:userObj,
-      dataType:"JSON",
+      type: 'GET',
       success: function(data)
       {
-     //  alert(data);
-     console.log("Ajax login success");
-       browserHistory.push('/search');
+       if(data="logged out"){
+          browserHistory.push('/');
+       }
       }.bind(this),
       error: function(err)
       {
@@ -26465,21 +26463,20 @@ var LogoutComponent = React.createClass({displayName: "LogoutComponent",
       }.bind(this)
     });
   },
-
+  componentDidMount:function(){
+    this.logout();
+  },
   render : function () {
     return(
-      React.createElement("div", {className: "container"}, 
-      React.createElement("form", {id: "NPMSearchForm", action: "#"}, 
-          React.createElement("button", {onClick: this.logout, className: "btn btn-lg btn-primary btn-block"}, "LOGOUT SUCCESSFULLY"), 
-          React.createElement("br", null)
+      React.createElement("div", null, 
+      React.createElement("h3", null, "you will be logout in some second if not please click ", React.createElement("a", {onClick: this.logout}, "here"), " to logout.")
       )
-)
     )
   }
 });
 
 module.exports = LogoutComponent;
-},{"react":232}],242:[function(require,module,exports){
+},{"react":232,"react-router":81}],242:[function(require,module,exports){
 var React = require('react');
 var {Link} = require('react-router');
 

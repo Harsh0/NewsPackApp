@@ -1,18 +1,16 @@
 var React = require('react');
-
+var {browserHistory}= require ('react-router');
 var LogoutComponent = React.createClass({
 
   logout(){
     $.ajax({
       url:'http://localhost:8080/logout',
-      type: 'POST',
-      data:userObj,
-      dataType:"JSON",
+      type: 'GET',
       success: function(data)
       {
-     //  alert(data);
-     console.log("Ajax login success");
-       browserHistory.push('/search');
+       if(data="logged out"){
+          browserHistory.push('/');
+       }
       }.bind(this),
       error: function(err)
       {
@@ -20,15 +18,14 @@ var LogoutComponent = React.createClass({
       }.bind(this)
     });
   },
-
+  componentDidMount:function(){
+    this.logout();
+  },
   render : function () {
     return(
-      <div className="container">
-      <form id="NPMSearchForm" action="#">
-          <button onClick={this.logout} className="btn btn-lg btn-primary btn-block">LOGOUT SUCCESSFULLY</button>
-          <br></br>
-      </form>
-</div>
+      <div>
+      <h3>you will be logout in some second if not please click <a onClick={this.logout} >here</a> to logout.</h3>
+      </div>
     )
   }
 });
