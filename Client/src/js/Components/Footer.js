@@ -8,7 +8,7 @@ var Footer = React.createClass({
             <div className="row">
               <div className="col-sm-3">
                 <h5>Copyright &copy 2016</h5>
-                <h5>Movie Search Coorporation</h5>
+                <h5>News Search Coorporation</h5>
               </div>
               <div className="col-sm-5">
                 <h5>About Us</h5>
