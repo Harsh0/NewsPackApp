@@ -26153,6 +26153,7 @@ var DisplayNews = React.createClass({displayName: "DisplayNews",
 module.exports = DisplayNews;
 },{"./NewsDisplayBox.js":243,"react":232}],236:[function(require,module,exports){
 var React = require('react');
+var SearchComponent = require('./SearchComponent')
 var FavouriteDisplay= React.createClass({displayName: "FavouriteDisplay",
 
   deleteFavNews:function()
@@ -26183,6 +26184,7 @@ var FavouriteDisplay= React.createClass({displayName: "FavouriteDisplay",
   render: function(){
     return (
       React.createElement("div", {className: "container", id: "movieElement"}, 
+        React.createElement(SearchComponent, null), 
       React.createElement("div", {style: {backgroundColor:'#CCCCCC'}, className: "row"}, 
       React.createElement("div", {className: "col-xs-4"}, 
       React.createElement("div", null, 
@@ -26274,7 +26276,7 @@ React.createElement("div", {className: "col-sm-11"},
 });
 
 module.exports = FavouriteDisplay;
-},{"react":232}],237:[function(require,module,exports){
+},{"./SearchComponent":244,"react":232}],237:[function(require,module,exports){
 var React = require('react');
 var Footer = React.createClass({displayName: "Footer",
 
@@ -26382,6 +26384,7 @@ module.exports = HomeComponent;
 var React = require('react');
 var FavouriteDisplay= require('./FavouriteDisplay.js');
 var ListFav = React.createClass({displayName: "ListFav",
+<<<<<<< HEAD
 
    getInitialState:function()
    {
@@ -26390,9 +26393,22 @@ var ListFav = React.createClass({displayName: "ListFav",
      }
    },
   getNews: function(){
+=======
+  getInitialState:function()
+  {
+    return {
+      Ndata:[]
+    }
+  },
+  getNews: function(obj){
+    if(!obj){
+      obj={};
+    }
+>>>>>>> 615e4e486b13ae53545a8b9eded232291be18c52
         $.ajax({
             url:"http://localhost:8080/news/get",
             type:'POST',
+            data:obj,
             dataType: 'JSON',
             success: function(data) {
              this.setState({newsData:data});
@@ -26487,20 +26503,18 @@ render : function () {
 module.exports = LoginComponent;
 },{"react":232,"react-router":81}],241:[function(require,module,exports){
 var React = require('react');
-
+var {browserHistory}= require ('react-router');
 var LogoutComponent = React.createClass({displayName: "LogoutComponent",
 
   logout(){
     $.ajax({
       url:'http://localhost:8080/logout',
-      type: 'POST',
-      data:userObj,
-      dataType:"JSON",
+      type: 'GET',
       success: function(data)
       {
-     //  alert(data);
-     console.log("Ajax login success");
-       browserHistory.push('/search');
+       if(data="logged out"){
+          browserHistory.push('/');
+       }
       }.bind(this),
       error: function(err)
       {
@@ -26508,21 +26522,20 @@ var LogoutComponent = React.createClass({displayName: "LogoutComponent",
       }.bind(this)
     });
   },
-
+  componentDidMount:function(){
+    this.logout();
+  },
   render : function () {
     return(
-      React.createElement("div", {className: "container"}, 
-      React.createElement("form", {id: "NPMSearchForm", action: "#"}, 
-          React.createElement("button", {onClick: this.logout, className: "btn btn-lg btn-primary btn-block"}, "LOGOUT SUCCESSFULLY"), 
-          React.createElement("br", null)
+      React.createElement("div", null, 
+      React.createElement("h3", null, "you will be logout in some second if not please click ", React.createElement("a", {onClick: this.logout}, "here"), " to logout.")
       )
-)
     )
   }
 });
 
 module.exports = LogoutComponent;
-},{"react":232}],242:[function(require,module,exports){
+},{"react":232,"react-router":81}],242:[function(require,module,exports){
 var React = require('react');
 var {Link} = require('react-router');
 
@@ -26692,6 +26705,72 @@ React.createElement("div", {className: "col-sm-11"},
 
 module.exports=NewsDisplayBox;
 },{"react":232}],244:[function(require,module,exports){
+var React=require('react');
+
+var SearchComponent=React.createClass({displayName: "SearchComponent",
+    getInitialState:function(){
+        return({
+          SelectOptions:[],
+          value:'select',
+          Keyword:""
+        })
+    },
+    componentDidMount:function(){
+        var url1="http://localhost:8090/user/categories";
+        $.ajax({
+            url:url1,
+            type:'GET',
+            dataType:'JSON',
+            success:function(data){
+                console.log(data);
+                this.setState({SelectOptions:data.category});
+            }.bind(this),
+            error:function(err){
+                console.log(err);
+            }.bind(this)
+        });
+    },
+
+    submitHandler: function(){
+      if(value=='select')
+      {
+          this.setState({value:''});
+      }
+      var category=this.state.value;
+      var obj={"category":category,"keyword":Keyword};
+      console.log(obj);
+      this.getNews(obj);
+
+    },
+    changeHandler: function(event){
+    this.setState({Keyword:event.target.value});
+      this.props.SearchChange(Keyword)
+    },
+
+    render:function(){
+
+      var SelectListArr=this.state.SelectOptions.map(function(option){
+              console.log('entering');
+              return(React.createElement("option", {value: option}, option));
+          });
+
+      return (
+        React.createElement("div", null, 
+        React.createElement("h1", null, "Search Your News"), 
+        React.createElement("select", {id: "myList", onChange: this.GetCategoryFavourites}, 
+        React.createElement("option", {value: "Select"}, "Select"), 
+        SelectListArr
+        ), 
+        React.createElement("br", null), 
+        React.createElement("input", {type: "text", size: "50", placeholder: "Search a News...", onChange: this.changeHandler}), "     ", 
+        React.createElement("button", {onClick: this.submitHandler, className: "btn btn-large btn-Warning "}, " Submit ")
+       )
+     );
+
+       }
+   });
+module.exports=SearchComponent;
+},{"react":232}],245:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var {browserHistory, Route, Router, IndexRoute,hasHistory} = require('react-router');
@@ -26730,4 +26809,4 @@ ReactDOM.render(
   React.createElement(Route, {path: "/logout", component: LogoutComponent})
   )
   ),document.getElementById('app'));
-},{"./Components/Footer.js":237,"./Components/Home.js":238,"./Components/ListFavouriteComponent.js":239,"./Components/LoginComponent.js":240,"./Components/LogoutComponent.js":241,"./Components/Navbar.js":242,"react":232,"react-dom":51,"react-router":81}]},{},[244]);
+},{"./Components/Footer.js":237,"./Components/Home.js":238,"./Components/ListFavouriteComponent.js":239,"./Components/LoginComponent.js":240,"./Components/LogoutComponent.js":241,"./Components/Navbar.js":242,"react":232,"react-dom":51,"react-router":81}]},{},[245]);
