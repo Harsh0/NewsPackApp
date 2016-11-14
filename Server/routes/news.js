@@ -107,6 +107,39 @@ router.route("/get").post(isLoggedIn,function(req,res,next){
   });
 });
 
+/*update news comment and category */
+router.route("/update").put(isLoggedIn,function(req,res,next){
+  var obj = req.body;
+  News.update({username:req.user.username,url:obj.url},{$set:{comment:obj.comment}},function(err,data){
+    if(err){
+      res.send(err);
+    }
+    else{
+      if(data.nModified){
+        res.send("News updated successfully");
+      }
+      else{
+        res.send("Already up to date");
+      }
+    }
+  });
+});
 
-
+/*delete news from  the database */
+router.route("/delete").delete(isLoggedIn,function(req,res,next){
+  var obj = req.body;
+  News.remove({username:req.user.username,url:obj.url},function(err,data){
+    if(err){
+      res.send(err);
+    }
+    else{
+      if(data.result.n){
+        res.send("News deleted Successfully");
+      }
+      else{
+        res.send("News is not available to delete");
+      }
+    }
+  });
+});
 module.exports = router;
