@@ -1,9 +1,11 @@
 var React = require('react');
+var SearchComponent = require('./SearchComponent')
 var FavouriteDisplay= React.createClass({
 
   render: function(){
     return (
       <div className="container" id="movieElement">
+        <SearchComponent/>
       <div style={{backgroundColor:'#CCCCCC'}} className="row">
       <div className="col-xs-4">
       <div >

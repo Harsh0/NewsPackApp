@@ -7,10 +7,14 @@ var ListFav = React.createClass({
       Ndata:[]
     }
   },
-  getNews: function(){
+  getNews: function(obj){
+    if(!obj){
+      obj={};
+    }
         $.ajax({
             url:"http://localhost:8090/news/get",
             type:'POST',
+            data:obj,
             dataType: 'JSON',
             success: function(data) {
              this.setState({Ndata:data});
