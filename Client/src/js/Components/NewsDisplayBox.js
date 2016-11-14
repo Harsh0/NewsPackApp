@@ -4,18 +4,15 @@ var NewsDisplayBox=React.createClass({
 
   //Ajax call to add news.
   addMovies(){
-    alert("hello");
     var category = this.refs.category.value;
     var comment = this.refs.comment.value;
-    alert(category);
-    alert(comment);
     var newsToStore = {
-      'author': this.props.author,
-      'title': this.props.title,
-      'description':this.props.description,
-      'url':this.props.url,
-      'urlToImage':this.props.urlToImage,
-      'publishedAt':this.props.publishedAt,
+      'author': this.props.newsObj.author,
+      'title': this.props.newsObj.title,
+      'description':this.props.newsObj.description,
+      'url':this.props.newsObj.url,
+      'urlToImage':this.props.newsObj.urlToImage,
+      'publishedAt':this.props.newsObj.publishedAt,
       'category':category,
       'comment':comment,
     }
